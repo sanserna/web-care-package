@@ -1,3 +1,6 @@
 *.sh
 *.DS_Store
+*.sublime-project
+*.sublime-workspace
 /node_modules
+/recursos

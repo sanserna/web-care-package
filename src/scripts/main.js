@@ -1,3 +1,24 @@
-// $(document).ready(function(){
-// 	// WEB INIT
-// });
+$(document).ready(function(){
+	// WEB INIT
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,23 +1,21 @@
 {
   "name": "web-care-package",
   "version": "1.0.0",
-  "description": "Front-End Care-Package",
+  "description": "paquete de inicio con todas las herramientas para el desarrollo front-end",
   "main": "gulpfile.js",
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sanserna/standard_build.git"
+    "url": "git+https://github.com/sanserna/web-care-package.git"
   },
   "author": "Santiago Serna",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sanserna/standard_build/issues"
+    "url": "https://github.com/sanserna/web-care-package/issues"
   },
-  "homepage": "https://github.com/sanserna/standard_build#readme",
+  "homepage": "https://github.com/sanserna/web-care-package#readme",
+  "dependencies": {
+    "jquery": "^2.1.4"
+  },
   "devDependencies": {
     "autoprefixer": "^6.2.2",
     "babelify": "^7.2.0",
@@ -42,9 +40,6 @@
     "rucksack-css": "^0.8.5",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "jquery": "^2.1.4"
   },
   "eslintConfig": {
     "extends": "google"

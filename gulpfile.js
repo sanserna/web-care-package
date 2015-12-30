@@ -1,10 +1,7 @@
 /**
- *
- *  Web Care-Package
- *  Copyright 2015 Santiago Serna. Todos los derechos reservados.
- *
+ * Web Care-Package
+ * Copyright 2015 Santiago Serna. Todos los derechos reservados.
  */
-
 
 // Requeridos
 var gulp = require('gulp');
@@ -32,18 +29,18 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
 /** 
-* Por defecto el Care-Package cuenta con una estructura de proyecto estandar,
-* las rutas para los archivos que seran procesados se almacenan en la variable
-* config. Si desea usar una estructura de proyecto diferente es necesario
-* modificar las rutas de los archivos de la variable config segun la estructura
-* de su proyecto (se recomienda usar la estructura estandar).
-*/
+ * Por defecto el Care-Package cuenta con una estructura de proyecto estandar,
+ * las rutas para los archivos que seran procesados se almacenan en la variable
+ * config. Si desea usar una estructura de proyecto diferente es necesario
+ * modificar las rutas de los archivos de la variable config segun la estructura
+ * de su proyecto (se recomienda usar la estructura estandar).
+ */
 
 
 /**
-* IMPORTANTE: El Care-Package usa Jade como motor de templates y pre-procesador
-* de HTML y PostCSS junto con Stylus como pre-procesador de CSS.
-*/
+ * IMPORTANTE: El Care-Package usa Jade como motor de templates y pre-procesador
+ * de HTML y PostCSS junto con Stylus como pre-procesador de CSS.
+ */
 
 // Config directories: objeto que contiene las rutas de entrada y salida para
 // los archivos del proyecto.
@@ -118,11 +115,11 @@ gulp.task('build:html', function(){
 });
 
 /**
-* El Care-Package utiliza postcss para transformar el codigo CSS, la variable
-* processors almacena los plugins que se pueden usar con postcss, si desea
-* agregar mas plugins consulte la documentacion sobre su uso:
-* https://github.com/postcss/postcss
-*/
+ * El Care-Package utiliza postcss para transformar el codigo CSS, la variable
+ * processors almacena los plugins que se pueden usar con postcss, si desea
+ * agregar mas plugins consulte la documentacion sobre su uso:
+ * https://github.com/postcss/postcss
+ */
 
 // CSS task: compilar y poner prefijos automaticamente a las hojas de estilo.
 gulp.task('build:css', function() {
@@ -130,7 +127,7 @@ gulp.task('build:css', function() {
   var processors = [
     // Prefijos para las propiedades de CSS que lo necesiten.
     autoprefixer,
-    // Un paquete que le da super poderes al css, consultar documentación:
+    // Un plugin que contiene muchas utilidades CSS, consultar documentación:
     // http://simplaio.github.io/rucksack/docs/
     rucksack,
     // Grid System, documentación: https://github.com/peterramsing/lost
@@ -165,31 +162,33 @@ gulp.task('build:css', function() {
 });
 
 /**
-* El Care-Package hace uso de browserify para gestionar dependencias en forma
-* de módulos y concatenar todo el código JS en un solo archivo. El uso de la 
-* sintaxis ES2015 (ECMAScript 6) es opcional, si desea hacer uso de la
-* sintaxis descomentar la linea `.transform(babelify)`
-*/
+ * El Care-Package hace uso de browserify para gestionar dependencias en forma
+ * de módulos y concatenar todo el código JS en un solo archivo. El uso de la 
+ * sintaxis ES2015 (ECMAScript 6) es opcional, si desea hacer uso de la
+ * sintaxis descomentar la linea '.transform(babelify)'
+ */
 
 // Scripts task: procesar codigo JS.
 gulp.task('build:js', function() {
   return browserify(config.scripts.main)
-    .transform(babelify)
+    //.transform(babelify)
     .bundle()
     .on('error', function(e){
       gutil.log(e);
     })
     .pipe(source('bundle.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init())
     .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.scripts.output));
 });
 
 /**
-* El Care-Package construye un directorio final en donde se encuentra una
-* carpeta con todas las imágenes y los assets de la pagina junto con el 
-* index.html en donde se encuentra anidado y minificado el código CSS y JS.
-*/
+ * El Care-Package construye un directorio final en donde se encuentra una
+ * carpeta con todas las imágenes y los assets de la pagina junto con el 
+ * index.html en donde se encuentra anidado y minificado el código CSS y JS.
+ */
 
 // Inline task: anidar el CSS y el JS dentro del archivo html y finalmente
 // minificar todo el archivo HTML.
@@ -233,11 +232,6 @@ gulp.task('browser-sync', function(){
     open: false,
     port: 3000
   });
-
-  gulp.watch(config.html.watch, ['build:html']);
-  gulp.watch(config.styles.watch, ['build:css']);
-  gulp.watch(config.scripts.watch, ['lint', 'build:js']);
-  gulp.watch(config.images.watch, ['images']);
 });
 
 // Final app server task: Crea un servidor estático en el directorio de producción.
@@ -249,8 +243,16 @@ gulp.task('build:serve', function(){
   });
 });
 
+// Watch task: estar atento a los cambios en los archivos.
+gulp.task('watch', function() {
+  gulp.watch(config.html.watch, ['build:html']);
+  gulp.watch(config.styles.watch, ['build:css']);
+  gulp.watch(config.scripts.watch, ['lint', 'build:js']);
+  gulp.watch(config.images.watch, ['images']);
+});
+
 // Build task: Construir archivos de producción.
 gulp.task('build', ['build:html', 'build:css', 'build:js', 'images', 'inline', 'copy:mainFiles']);
 
 // Default task
-gulp.task('default', ['browser-sync']);
+gulp.task('default', ['browser-sync', 'watch']);

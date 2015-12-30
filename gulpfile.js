@@ -46,7 +46,7 @@ var reload = browserSync.reload;
 // los archivos del proyecto.
 var config = {
   html: {
-    main: './src/index.jade',
+    main: './src/*.jade',
     output: './build',
     watch: './src/index.jade'
   },
@@ -63,7 +63,7 @@ var config = {
   },
   images: {
     output: './dist/img',
-    watch: ['./build/img/*.png', './build/img/*.jpg']
+    watch: ['./build/res/**/*.png', './build/res/**/*.jpg']
   }
 }
 

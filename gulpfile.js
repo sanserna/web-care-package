@@ -6,6 +6,7 @@
 // Requeridos
 var gulp = require('gulp');
 var gutil = require('gulp-util');
+var gulpif = require('gulp-if');
 var eslint = require('gulp-eslint');
 var postcss = require('gulp-postcss');
 var cssnano = require('gulp-cssnano');
@@ -81,14 +82,16 @@ gulp.task('lint', function() {
       'no-obj-calls': 2,
       'no-unused-vars': 0,
       'semi': 1,
-      'quotes': 0
+      'quotes': 0,
+      'space-before-blocks': [1, "never"],
+      'no-multiple-empty-lines': 0
     },
     'globals': {
       '$': false
     }
   }))
   .pipe(eslint.format())
-  .pipe(eslint.failOnError());
+  .pipe(gulpif(!browserSync.active, eslint.failOnError()));
 });
 
 // Image task: optimizar imagenes.

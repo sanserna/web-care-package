@@ -12,12 +12,9 @@
 // dependencias de npm para que puedas usarlo.
 var $ = require('jquery');
 
-$(document).ready(function(){
-	// Tu codigo JS va aqui!
+$(function(){
+    // Tu codigo aqui!
 });
-
-
-
 
 
 

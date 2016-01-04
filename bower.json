@@ -1,0 +1,25 @@
+{
+  "name": "web-care-package",
+  "description": "paquete de inicio con todas las herramientas para el desarrollo front-end",
+  "main": "gulpfile.js",
+  "authors": [
+    "Santiago Serna"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/sanserna/web-care-package",
+  "moduleType": [
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6"
+  }
+}

@@ -37,7 +37,6 @@ var reload = browserSync.reload;
  * de su proyecto (se recomienda usar la estructura estandar).
  */
 
-
 /**
  * IMPORTANTE: El Care-Package usa Jade como motor de templates y pre-procesador
  * de HTML y PostCSS junto con Stylus como pre-procesador de CSS.
@@ -67,6 +66,13 @@ var config = {
     watch: ['./build/res/**/*.png', './build/res/**/*.jpg']
   }
 }
+
+/** 
+ * ESList permite configurar reglas que serán aplicadas en la verificación del
+ * código JS, el Care-Package tiene algunas definidas por defecto, eres
+ * libre de modificar el objeto rules como mejor te parezca, consulta la
+ * documentación: http://eslint.org/docs/rules/
+ */
 
 // Lint JavaScript: lee el codigo JS y verifica si tiene errores.
 gulp.task('lint', function() {

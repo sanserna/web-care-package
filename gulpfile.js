@@ -18,14 +18,11 @@ var stylus = require('gulp-stylus');
 var jade = require('gulp-jade');
 var htmlmin = require('gulp-htmlmin');
 var plumber = require('gulp-plumber');
-var browserify = require('browserify');
-var babelify = require("babelify");
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var uglify = require('gulp-uglify');
 var smoosher = require('gulp-smoosher');
 var imagemin = require('gulp-imagemin');
 var size = require('gulp-size');
+var uglify = require('gulp-uglify');
+var newer = require('gulp-newer');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
@@ -179,15 +176,10 @@ gulp.task('build:css', function() {
 
 // Scripts task: procesar codigo JS.
 gulp.task('build:js', function() {
-  return browserify(config.scripts.main)
-    //.transform(babelify)
-    .bundle()
-    .on('error', function(e){
-      gutil.log(e);
-    })
-    .pipe(source('bundle.js'))
-    .pipe(buffer())
+  gulp.src(config.scripts.main)
+    .pipe(newer('./src/scripts/**/*.js'))
     .pipe(sourcemaps.init())
+    .pipe(babel())
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.scripts.output));

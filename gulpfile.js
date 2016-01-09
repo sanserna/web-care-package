@@ -23,6 +23,7 @@ var imagemin = require('gulp-imagemin');
 var size = require('gulp-size');
 var uglify = require('gulp-uglify');
 var newer = require('gulp-newer');
+var babel = require('gulp-babel');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
@@ -129,16 +130,6 @@ gulp.task('build:html', function(){
 
 // CSS task: compilar y poner prefijos automaticamente a las hojas de estilo.
 gulp.task('build:css', function() {
-  // Variable que contiene un arreglo con los plugins a usarse en postcss.
-  var processors = [
-    // Prefijos para las propiedades de CSS que lo necesiten.
-    autoprefixer,
-    // Un plugin que contiene muchas utilidades CSS, consultar documentación:
-    // http://simplaio.github.io/rucksack/docs/
-    rucksack,
-    // Grid System, documentación: https://github.com/peterramsing/lost
-    lost
-  ];
   // Variable que contiene un arreglo con los navegadores a los que se les
   // quiere dar soporte en el proyecto.
   var browsers = [
@@ -153,16 +144,29 @@ gulp.task('build:css', function() {
     'bb >= 10'
   ];
 
+  // Variable que contiene un arreglo con los plugins a usarse en postcss.
+  var processors = [
+    // Prefijos para las propiedades de CSS que lo necesiten.
+    autoprefixer({
+      browsers: browsers
+    }),
+    // Un plugin que contiene muchas utilidades CSS, consultar documentación:
+    // http://simplaio.github.io/rucksack/docs/
+    rucksack,
+    // Grid System, documentación: https://github.com/peterramsing/lost
+    lost
+  ];
+
   gulp.src(config.styles.main)
     // Usar sintaxis de Stylus (opcional).
     .pipe(stylus({
       'include css': true
     }))
-    .pipe(sourcemaps.init())
+    //.pipe(sourcemaps.init())
     .pipe(postcss(processors))
     // Minify styles.
     .pipe(cssnano())
-    .pipe(sourcemaps.write('./'))
+    //.pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.styles.output))
     .pipe(reload({stream:true}));
 });
@@ -179,7 +183,7 @@ gulp.task('build:js', function() {
   gulp.src(config.scripts.main)
     .pipe(newer('./src/scripts/**/*.js'))
     .pipe(sourcemaps.init())
-    .pipe(babel())
+    //.pipe(babel())
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(config.scripts.output));

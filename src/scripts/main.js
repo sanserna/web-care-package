@@ -11,11 +11,10 @@
 // Por defecto el Care-Package viene con Jquery incluido dentro de las
 // dependencias de npm para que puedas usarlo.
 var $ = require('jquery');
-require('bootstrap');
 
 $(function(){
   // Tu codigo aqui!
-  $('h1').css("color", "blue");
+  $('h1').html('hola');
 });
 
 

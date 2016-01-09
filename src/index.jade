@@ -39,14 +39,12 @@ head
 
 body
 	//- Agrega el contenido de tu aplicacion web aqui:
+	header.main-header
+		h1.title Web-Care-Package
 	.layout
-		h1 titulo de la pagina
-		.droptdown
-			button(class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true") Dropdown #[span(class="caret")]
-			ul.dropdown-menu(aria-labelledby="dropdownMenu1") 
-				li #[a(href="#") Action]
-				li #[a(href="#") Otra cosa] 
-				li #[a(href="#") Lo que sea]
+		.subheading
+			h2.title--secondary paquete de inicio con todas las herramientas necesarias para el desarrollo front-end.
+			p.description Empieza tu proyecto web con Web-Care-Package y manten tu flujo de trabajo optimo, productivo, profesional y colaborativo.
 		
 	//- Google Analytics: cambiar UA-XXXXX-X por el ID de tu sitio web
 	script.
@@ -64,5 +62,5 @@ body
 	
 	//- JS
 	// smoosh 
-	script(src="./js/bundle.js")
+	script(src="./js/main.js")
 	// endsmoosh 

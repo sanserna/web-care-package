@@ -28,7 +28,7 @@ var size = require('gulp-size');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 
-/** 
+/**
  * Por defecto el Care-Package cuenta con una estructura de proyecto estandar,
  * las rutas para los archivos que seran procesados se almacenan en la variable
  * config. Si desea usar una estructura de proyecto diferente es necesario
@@ -69,26 +69,10 @@ var config = {
 
 // Lint JavaScript: lee el codigo JS y verifica si tiene errores.
 gulp.task('lint', function() {
-  gulp.src([config.scripts.lint])
-  .pipe(eslint({
-    'rules': {
-      'no-alert': 0,
-      'camelcase': 1,
-      'curly': 1,
-      'eqeqeq': 0,
-      'no-empty': 1,
-      'no-use-before-define': 0,
-      'no-obj-calls': 2,
-      'no-unused-vars': 0,
-      'semi': 1,
-      'quotes': 0
-    },
-    'globals': {
-      '$': false
-    }
-  }))
+  gulp.src(['app/scripts/**/*.js', '!app/scripts/vendors/**', '!app/scripts/utils/**'])
+  .pipe(eslint())
   .pipe(eslint.format())
-  .pipe(eslint.failOnError());
+  .pipe(gulpif(!browserSync.active, eslint.failOnError()));
 });
 
 // Image task: optimizar imagenes.
@@ -163,7 +147,7 @@ gulp.task('build:css', function() {
 
 /**
  * El Care-Package hace uso de browserify para gestionar dependencias en forma
- * de módulos y concatenar todo el código JS en un solo archivo. El uso de la 
+ * de módulos y concatenar todo el código JS en un solo archivo. El uso de la
  * sintaxis ES2015 (ECMAScript 6) es opcional, si desea hacer uso de la
  * sintaxis descomentar la linea '.transform(babelify)'
  */
@@ -186,7 +170,7 @@ gulp.task('build:js', function() {
 
 /**
  * El Care-Package construye un directorio final en donde se encuentra una
- * carpeta con todas las imágenes y los assets de la pagina junto con el 
+ * carpeta con todas las imágenes y los assets de la pagina junto con el
  * index.html en donde se encuentra anidado y minificado el código CSS y JS.
  */
 
